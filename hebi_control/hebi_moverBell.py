@@ -29,7 +29,8 @@ class SequenceController(Node):
         self.pub_place = self.create_publisher(Empty, '/exec_place', 10)
         self.pub_retreat = self.create_publisher(Empty, '/exec_retreat', 10)
         self.pub_bell = self.create_publisher(String, "/selected_bell", 10)
-
+        self.pub_motion_done = self.create_publisher(Empty, "/motion_done", 10)
+        
         # Create action client for gripper control
         self._action_client = ActionClient(
             self, GripperCommand, '/gripper_controller/gripper_cmd', callback_group=self.callback_group
@@ -194,6 +195,7 @@ class SequenceController(Node):
             self.approach()
             self.close_gripper()
             self.grasp()
+            self.pub_motion_done.publish(Empty())
 
         elif cmd == "d":
             self.select_bell("handbell_d")
@@ -201,6 +203,7 @@ class SequenceController(Node):
             self.approach()
             self.close_gripper()
             self.grasp()
+            self.pub_motion_done.publish(Empty())
             
         elif cmd == "e":
             self.select_bell("handbell_e")
@@ -208,6 +211,7 @@ class SequenceController(Node):
             self.approach()
             self.close_gripper()
             self.grasp()
+            self.pub_motion_done.publish(Empty())
             
         elif cmd == "f":
             self.select_bell("handbell_f")
@@ -215,6 +219,7 @@ class SequenceController(Node):
             self.approach()
             self.close_gripper()
             self.grasp()
+            self.pub_motion_done.publish(Empty())
             
         elif cmd == "g":
             self.select_bell("handbell_g")
@@ -222,6 +227,7 @@ class SequenceController(Node):
             self.approach()
             self.close_gripper()
             self.grasp()
+            self.pub_motion_done.publish(Empty())
         
         elif cmd == "a":
             self.select_bell("handbell_a")
@@ -229,6 +235,7 @@ class SequenceController(Node):
             self.approach()
             self.close_gripper()
             self.grasp()
+            self.pub_motion_done.publish(Empty())
         
         elif cmd == "b":
             self.select_bell("handbell_b")
@@ -236,6 +243,7 @@ class SequenceController(Node):
             self.approach()
             self.close_gripper()
             self.grasp()
+            self.pub_motion_done.publish(Empty())
             
         elif cmd == "cp":
             self.select_bell("handbell_cp")
@@ -243,27 +251,33 @@ class SequenceController(Node):
             self.approach()
             self.close_gripper()
             self.grasp()
+            self.pub_motion_done.publish(Empty())
 
         elif cmd == "roll1":
             self.roll()
+            self.pub_motion_done.publish(Empty())
 
         elif cmd == "roll2":
             self.roll()
             time.sleep(0.5)
             self.roll()
+            self.pub_motion_done.publish(Empty())
             
         elif cmd == "place":
             self.place()
             self.open_gripper()
             self.retreat()
+            self.pub_motion_done.publish(Empty())
 
         elif cmd == "home":
             self.open_gripper()
             self.home()
+            self.pub_motion_done.publish(Empty())
 
         elif cmd == "exit":
             self.open_gripper()
             self.home()
+            self.pub_motion_done.publish(Empty())
             rclpy.shutdown()
 
         else:
